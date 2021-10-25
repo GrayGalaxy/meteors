@@ -1,0 +1,31 @@
+name: Bug Report
+description: File a bug report
+labels: [bug]
+assignees:
+  - GrayGalaxy
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem
+    validations:
+      required: true
+  - type: textarea
+    id: link
+    attributes:
+      label: Requested Endpoint or URL
+      description: If you are reporting a problem with a specific endpoint it would help to which api endpoint failed.
+    validations:
+      required: false
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggest Solution
+      description: 'Optional: only if you have suggestions on a fix/reason for the bug'
+    validations:
+      required: false

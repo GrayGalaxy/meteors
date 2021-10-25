@@ -1,5 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
+const getStoreUrl = require('../../utils/storeUrl')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
@@ -40,8 +41,10 @@ const fetchData = async (request_url) => {
 }
 
 module.exports = async (req, res) => {
-	const { id, url, lang = 'en-us' } = req.query
-	const request_url = `https://play.google.com/store/apps/details?id=${id}&hl=en`
+	const { id, regn } = req.query
+
+	const request_url = getStoreUrl('android', id, regn)
 	const result = await fetchData(request_url)
+
 	res.send(result)
 }

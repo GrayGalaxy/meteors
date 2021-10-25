@@ -1,5 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
+const storeUrl = require('../../utils/storeUrl')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
@@ -39,8 +40,10 @@ const fetchData = async (request_url) => {
 }
 
 module.exports = async (req, res) => {
-	const { id, url, lang = 'en-us' } = req.query
-	const request_url = `https://www.microsoft.com/en-us/p/apps/${id}`
-	const result = await fetchData(request_url)
+	const { id, regn } = req.query
+
+	const url = storeUrl('microsoft', id, regn)
+	const result = await fetchData(url)
+
 	res.send(result)
 }

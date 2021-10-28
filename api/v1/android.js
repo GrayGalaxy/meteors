@@ -4,6 +4,7 @@ const getStoreUrl = require('../../utils/storeUrl')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
+	if (!res) return
 	const $ = cheerio.load(res.data)
 
 	// get TITLE
@@ -35,16 +36,17 @@ const fetchData = async (request_url) => {
 
 	// get RATING
 	let rating = $('.BHMmbe').text()
-	rating = parseFloat(rating)
 
 	return { title, image, url, author, category, price, rating }
 }
 
 module.exports = async (req, res) => {
 	const { id, regn } = req.query
+	if (!id) res.status(404).end('ID is not given, can not process request')
 
 	const request_url = getStoreUrl('android', id, regn)
 	const result = await fetchData(request_url)
 
-	res.send(result)
+	if (result) res.send(result)
+	else res.status(404).send('Unable to process request')
 }

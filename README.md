@@ -38,10 +38,10 @@ const { data } = axios.get('https://meteors.vercel.app/api/v1/microsoft?id=9mspc
 
 ### Routes
 
-Currently, only two routes are available these are...
-
-`/microsoft` : To get Windows apps \
-`/android` : to get Google Playstore apps
+**`/api/v1/microsoft`** : To get Windows apps \
+**`/api/v1/android`** : to get Google Playstore apps \
+**`/api/v1/wordpress`** : to get WordPress Plugins \
+**`/api/v1/firefox`** : to get Firefox plugins
 
 ### Parameters
 

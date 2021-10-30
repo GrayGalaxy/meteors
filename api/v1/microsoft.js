@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const storeUrl = require('../../utils/storeUrl')
+const { storeURL } = require('../../utils')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
 	const { id, regn } = req.query
 	if (!id) res.status(404).end('ID is not given, can not process request')
 
-	const url = storeUrl('microsoft', id, regn)
+	const url = storeURL('microsoft', id, regn)
 	const result = await fetchData(url)
 
 	if (result) res.send(result)

@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const getStoreUrl = require('../../utils/storeUrl')
+const { storeURL } = require('../../utils')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
@@ -14,8 +14,7 @@ const fetchData = async (request_url) => {
 	let author = {}
 	author.name = $('.AddonTitle-author>a').text()
 	author.url = $('.AddonTitle-author>a').attr('href')
-	if (!author.url?.match(/https?\:\/\//))
-		author.url = `https://addons.mozilla.org${author.url}`
+	if (!author.url?.match(/https?\:\/\//)) author.url = `https://addons.mozilla.org${author.url}`
 
 	return {
 		title: d.name,
@@ -34,7 +33,7 @@ module.exports = async (req, res) => {
 	const { id, regn } = req.query
 	if (!id) res.status(404).end('ID is not given, can not process request')
 
-	const request_url = getStoreUrl('firefox', id, regn)
+	const request_url = storeURL('firefox', id, regn)
 	const result = await fetchData(request_url)
 
 	if (result) res.send(result)

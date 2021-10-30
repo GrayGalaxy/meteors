@@ -1,8 +1,7 @@
 {
 	"name": "project-meteors",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"description": "Api to scrape and fetch app data from store",
-	"main": "api/v1/index.js",
 	"author": "Avirup Ghosh",
 	"license": "GPL-3.0",
 	"dependencies": {

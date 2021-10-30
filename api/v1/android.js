@@ -1,15 +1,18 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const getStoreUrl = require('../../utils/storeUrl')
+const { storeURL } = require('../../utils')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
 	if (!res) return
 	const $ = cheerio.load(res.data)
 
+	const data = $('script[type="application/ld+json"]').html()
+	const d = JSON.parse(data)
+
 	// get TITLE
-	let title = $('[itemprop="name"]>div').text()
-	title = title || $('h1[itemprop="name"]').text()
+	let title = d.title
+	title = title || $('[itemprop="name"]').text()
 
 	// get IMAGE
 	let image = $('img[itemprop="image"][alt*="Cover"]').attr('src')
@@ -17,7 +20,7 @@ const fetchData = async (request_url) => {
 	image = image.replace(/(\/\/.*\.com\/.*)(\=(?:w|s)[0-9]{1,4}(?:-rw)?)/i, '$1=s128')
 
 	// get URL
-	let url = $('link[hreflang="x-default"]').attr('src')
+	let url = d.url || $('link[hreflang="x-default"]').attr('src')
 	url = url || $('meta[property="og:url"]').attr('content')
 	url = url.replace('&rdid=sp0n.citizen&feature=md&offerId', '')
 
@@ -44,7 +47,7 @@ module.exports = async (req, res) => {
 	const { id, regn } = req.query
 	if (!id) res.status(404).end('ID is not given, can not process request')
 
-	const request_url = getStoreUrl('android', id, regn)
+	const request_url = storeURL('android', id, regn)
 	const result = await fetchData(request_url)
 
 	if (result) res.send(result)

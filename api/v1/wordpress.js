@@ -1,7 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { filter } = require('domutils')
-const getStoreUrl = require('../../utils/storeUrl')
+const { storeURL, currency } = require('../../utils')
 
 const fetchData = async (request_url) => {
 	const res = await axios(request_url)
@@ -23,7 +22,9 @@ const fetchData = async (request_url) => {
 
 	//get PRICE
 	let price = parseFloat(d.offers.price)
-	price = parseFloat(price) === 0 ? 'Free' : price
+	let code = d.offers.priceCurrency
+	if (parseFloat(price) === 0) price = 'Free'
+	else price = currency(price, code)
 
 	return {
 		title: d.name,
@@ -42,7 +43,7 @@ module.exports = async (req, res) => {
 	const { id, regn } = req.query
 	if (!id) res.status(404).end('ID is not given, can not process request')
 
-	const request_url = getStoreUrl('wordpress', id, regn)
+	const request_url = storeURL('wordpress', id, regn)
 	const result = await fetchData(request_url)
 
 	if (result) res.send(result)

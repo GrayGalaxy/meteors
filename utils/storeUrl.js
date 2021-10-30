@@ -1,4 +1,4 @@
-const region_code = ['us', 'de', 'gb', 'fr', 'es', 'ru', 'tr', 'it', 'at', 'ch', 'jp', 'pl']
+const region_code = ['us', 'de', 'gb', 'fr', 'es', 'ru', 'tr', 'it', 'au', 'ch', 'jp', 'pl']
 // prettier-ignore
 const store_urls = {
 	amazon: {
@@ -11,7 +11,7 @@ const store_urls = {
 	},
 	firefox: {
 		url: 'https://addons.mozilla.org/{REGN}/firefox/addon/{APPID}',
-		regn: {1:'de',2:'en-US',4:'fr',5:'es',6:'ru',8:'it',},
+		regn: {1:'en-US',2:'de',4:'fr',5:'es',6:'ru',8:'it',},
 	},
 	android: {
 		url: 'https://play.google.com/store/apps/details?id={APPID}&hl={REGN}',

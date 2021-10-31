@@ -8,5 +8,11 @@
 				{ "key": "Author", "value": "GrayGalaxy https://github.com/graygalaxy" }
 			]
 		}
+	],
+	"redirects": [
+		{
+			"source": "/api(/v\\d)?",
+			"destination": "/index.html"
+		}
 	]
 }
